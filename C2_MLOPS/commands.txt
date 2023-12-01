@@ -1,5 +1,8 @@
+Setting the Project 
+gcloud config set project srivastsan-project 
+
 Create a container - This will store in container registry
-> gcloud builds submit --tag gcr.io/lucky-project/complaintsapi .
+gcloud builds submit --tag gcr.io/lucky-project/complaintsapi .
 
 Show last 3 containers and also apply filter 
 gcloud builds list --filter complaints --limit 3 
@@ -46,4 +49,21 @@ kubectl scale deployment complaints --replicas 2
 
 Horizontal Pod Autoscaller 
 kubectl autoscale deployment complaints --max 6 --min 2 --cpu-percent 50
+
+Deploying Continer on Google Cloud Run 
+gcloud run deploy container_name --image gcr.io/luckyproject/flask-gke --platform managed --memory 1G
+
+Deploying Flask Application on App Engine [Go wherever your app.yaml files is]
+gcloud app create
+gcloud app deploy
+
+Deploy Application on GKE Autopilot
+- Create a AutoPilot GKE Cluster 
+- You will get Cluster connect link 
+- Come to gcloud shell paste that link 
+- Create the container as you have created earlier 
+- Deploy Deployment.yaml and Service.yaml
+
+
+
 
