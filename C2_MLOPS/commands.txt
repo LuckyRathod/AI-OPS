@@ -1,0 +1,49 @@
+Create a container - This will store in container registry
+> gcloud builds submit --tag gcr.io/lucky-project/complaintsapi .
+
+Show last 3 containers and also apply filter 
+gcloud builds list --filter complaints --limit 3 
+
+Container Details
+gcloud builds describe container_id
+
+Container Logs Details
+gcloud build logs container_id
+
+Creating Kubernetes Cluster 
+gcloud container clusters create complaints-gke --zone "us-west1-b" --machine-type "n1-standard-1"
+--num-nodes "1" --service-account luckyrathod-gke@luckyproject.iam.gserviceaccount.com
+
+Deploying Deployment.yaml in Cluster 
+kubectl apply -f deployment.yaml
+
+Get all deployments 
+kubectl get deployments 
+
+Get all pods
+kubectl get pods
+
+Describe pod
+kubectl describe pod pod_id
+
+Get pod logs 
+kubectl logs pod pod_id
+
+Deploying service.yaml in cluster
+kubectl apply -f service.yaml
+
+Get all services
+kubectl get services
+
+Increase Kubernetes Cluster Size 
+gcloud container clusters resize complaints-gke -num-nodes 3 --zone us-west1-b
+
+List all the clusters container list 
+gcloud container clusters list 
+
+Scale PODS - Deployment - Replicas
+kubectl scale deployment complaints --replicas 2 
+
+Horizontal Pod Autoscaller 
+kubectl autoscale deployment complaints --max 6 --min 2 --cpu-percent 50
+
