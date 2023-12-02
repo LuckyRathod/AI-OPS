@@ -65,5 +65,19 @@ Deploy Application on GKE Autopilot
 - Deploy Deployment.yaml and Service.yaml
 
 
+CI-CD Automated Pipeline
+- Clone repo in Google cloud shell
+- Follow the Process of Creating Cluster 
+- Create Docker,Deployment,Service yaml files
+- Create Cloud Build [Similar to Jenkins]
+- Run Cloud Build YAML File 
+gcloud builds submit --config cloudbuild.yaml
+
+To Integrate Github with GCP . And do Automated CI-CD 
+- Setup an Google cloud build in Github for that repo
+- Create a Trigger "Push to Main" in GCP Build 
+
+
+
 
 
