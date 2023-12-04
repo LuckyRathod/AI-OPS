@@ -79,7 +79,7 @@ To Integrate Github with GCP . And do Automated CI-CD
 
 FEAST - Open Source Features Store 
 > feast init demostore -t gcp 
-
+> feast materialize startdate enddate
 
 
 
