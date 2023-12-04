@@ -77,6 +77,9 @@ To Integrate Github with GCP . And do Automated CI-CD
 - Setup an Google cloud build in Github for that repo
 - Create a Trigger "Push to Main" in GCP Build 
 
+FEAST - Open Source Features Store 
+> feast init demostore -t gcp 
+
 
 
 
