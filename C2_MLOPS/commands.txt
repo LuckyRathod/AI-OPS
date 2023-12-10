@@ -22,7 +22,9 @@ gcloud builds describe container_id
 Container Logs Details
 gcloud build logs container_id
 
-Creating Kubernetes Cluster 
+Creating Kubernetes Cluster [ We will only use one node now. Because we will auto scale later]
+Make sure you first create service account . Or else your cluster will be deployed as public
+
 gcloud container clusters create complaints-gke --zone "us-west1-b" --machine-type "n1-standard-1"
 --num-nodes "1" --service-account luckyrathod-gke@luckyproject.iam.gserviceaccount.com
 
@@ -54,10 +56,12 @@ gcloud container clusters resize complaints-gke -num-nodes 3 --zone us-west1-b
 List all the clusters container list 
 gcloud container clusters list 
 
+Manually Scaling Up
 Scale PODS - Deployment - Replicas
 kubectl scale deployment complaints --replicas 2 
 
-Horizontal Pod Autoscaller 
+When we dont know when the traffic might increase
+Horizontal Pod Autoscaller [This will automatically increase or decrease pod in response to workload]
 kubectl autoscale deployment complaints --max 6 --min 2 --cpu-percent 50
 
 Deploying Continer on Google Cloud Run  : Here we dont have to scale up and down. GCP handles everything
@@ -91,11 +95,32 @@ gcloud builds submit --config cloudbuild.yaml
 
 To Integrate Github with GCP . And do Automated CI-CD 
 - Setup an Google cloud build in Github for that repo
-- Create a Trigger "Push to Main" in GCP Build 
+- Create a Trigger "Push to Main" in GCP Build [Cloud Build - Dashboard - Setup build triggers]
 
 FEAST - Open Source Features Store 
+Steps :
+Initialize Feature Repository based on Template(Local/AWS/Azure) 
 > feast init demostore -t gcp 
-> feast materialize startdate enddate
+  This creates 2 files :
+   - driver_repo.py : Here we define structure of Incoming data source (BigQuery) in Feature Store . BigQuery : Customer Dataset - Consist of Transactions 
+           - We first define BigQuerySource 
+           - Create FeatureView (It is Group of Features)
+           - We specify .Which features we need to add from BigQuery 
+
+
+   - feature_store.yaml - It setups metadata for incoming source (Here we specify that store metadata in gcp cloud storage
+
+> cd demostore 
+> feast apply 
+(This will register feature defination with feature registrey specfied in feature store which is gcp)
+
+After using above command. DataStore will get created but it will be empty 
+Create the df (Add features which you want )
+> feast materialize start_date end_Date
+
+Now lets say you have trained and deploy your model . Also your Online store is ready . How we will refer this online store 
+
+> Use get_online_features to do prediction if needed
 
 
 
