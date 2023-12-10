@@ -1,5 +1,14 @@
+Copy your code into Google Cloud storage bucket
+gsutil ls 
+
+Copy your code from Google cloud storage into Google command line shell
+gsutil cp -r gs://tf-flask-app/ .
+
+Get Project value 
+gcloud config get-value project
+
 Setting the Project 
-gcloud config set project srivastsan-project 
+gcloud config set project lucky-project 
 
 Create a container - This will store in container registry
 gcloud builds submit --tag gcr.io/lucky-project/complaintsapi .
@@ -38,6 +47,7 @@ kubectl apply -f service.yaml
 Get all services
 kubectl get services
 
+For Scaling . First we will have to increase cluster size
 Increase Kubernetes Cluster Size 
 gcloud container clusters resize complaints-gke -num-nodes 3 --zone us-west1-b
 
@@ -50,14 +60,20 @@ kubectl scale deployment complaints --replicas 2
 Horizontal Pod Autoscaller 
 kubectl autoscale deployment complaints --max 6 --min 2 --cpu-percent 50
 
-Deploying Continer on Google Cloud Run 
+Deploying Continer on Google Cloud Run  : Here we dont have to scale up and down. GCP handles everything
 gcloud run deploy container_name --image gcr.io/luckyproject/flask-gke --platform managed --memory 1G
 
 Deploying Flask Application on App Engine [Go wherever your app.yaml files is]
 gcloud app create
 gcloud app deploy
 
-Deploy Application on GKE Autopilot
+App Engine vs Cloud Run 
+https://cloud.google.com/appengine/migration-center/run/compare-gae-with-run#:~:text=In%20App%20Engine%2C%20idle%20instances,allocation%20to%20CPU%20always%20allocated.
+
+
+Deploy Application on GKE Autopilot (You will be only charged for pods)
+https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-overview#:~:text=GKE%20Autopilot%20is%20a%20mode,security%2C%20and%20other%20preconfigured%20settings.
+
 - Create a AutoPilot GKE Cluster 
 - You will get Cluster connect link 
 - Come to gcloud shell paste that link 
